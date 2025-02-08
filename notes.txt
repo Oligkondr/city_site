@@ -1,0 +1,16 @@
+curl -s "https://laravel.build/example-app?with=mysql,redis&devcontainer" | bash
+
+APP_PORT=60000
+FORWARD_DB_PORT=60001
+VITE_PORT=60002
+APP_SERVICE=app
+
+docker-compose
+laravel.test -> app
+
+./vendor/bin/sail up -d
+
+./vendor/bin/sail artisan migrate
+
+
+

@@ -1,0 +1,1 @@
+/home/oleg/projects/city_site/vendor/bin/sail
