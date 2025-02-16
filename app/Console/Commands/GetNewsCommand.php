@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Models\News;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
+use Symfony\Component\DomCrawler\Crawler;
 
 class GetNewsCommand extends Command
 {
@@ -25,13 +28,25 @@ class GetNewsCommand extends Command
      */
     public function handle()
     {
-//        $response = Http::get('http://lenta.ru/rss/news');
-//        $xml = $response->body();
-//        file_put_contents('file.xml', $xml);
-        $xml = file_get_contents('file.xml');
-        $new = simplexml_load_string($xml);
-        $con = json_encode($new);
-        $newArr = json_decode($con, true);
-        dd($newArr['channel']['item'][0]);
+        $response = Http::get('http://lenta.ru/rss/news');
+
+        $xml = simplexml_load_string($response->body());
+        $data = json_decode(json_encode($xml), true);
+
+        foreach ($data['channel']['item'] as $item) {
+            $response = Http::get($item['link']);
+
+            $crawler = new Crawler($response->body(), 'https://lenta.ru/');
+            $content = $crawler->filter('.topic-body__content')->text();
+
+            $news = new News();
+            $news->link = $item['link'];
+            $news->author = $item['author'];
+            $news->title = $item['title'];
+            $news->content = $content;
+            $news->publish_at = $item['publish_at'];
+            $news->category_id = $item['category_id'];
+            $news->save();
+        }
     }
 }

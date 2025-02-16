@@ -23,3 +23,5 @@ yarn-error.log
 /.zed
 /file.xml
 /notes.txt
+/parse.html
+/_ide_helper.php
