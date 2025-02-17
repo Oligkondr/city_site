@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\News;
+use App\Models\NewsCategory;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Symfony\Component\DomCrawler\Crawler;
@@ -34,6 +35,22 @@ class GetNewsCommand extends Command
         $data = json_decode(json_encode($xml), true);
 
         foreach ($data['channel']['item'] as $item) {
+            $this->comment($item['link']);
+
+            $news = News::firstWhere('link', $item['link']);
+
+            if ($news) {
+                continue;
+            }
+
+            $category = NewsCategory::firstWhere('name', $item['category']);
+
+            if (!$category) {
+                $category = new NewsCategory();
+                $category->name = $item['category'];
+                $category->save();
+            }
+
             $response = Http::get($item['link']);
 
             $crawler = new Crawler($response->body(), 'https://lenta.ru/');
@@ -44,8 +61,8 @@ class GetNewsCommand extends Command
             $news->author = $item['author'];
             $news->title = $item['title'];
             $news->content = $content;
-            $news->publish_at = $item['publish_at'];
-            $news->category_id = $item['category_id'];
+            $news->publish_at = $item['pubDate'];
+            $news->category_id = $category->id;
             $news->save();
         }
     }
