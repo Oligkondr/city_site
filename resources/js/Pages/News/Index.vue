@@ -5,5 +5,10 @@ import Layout from "@/Components/Layout.vue";
 
 <template>
     <Layout>
+        <h1>Новости</h1>
     </Layout>
 </template>
+
+<style scoped>
+
+</style>
