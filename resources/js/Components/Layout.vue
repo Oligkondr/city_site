@@ -11,8 +11,10 @@ const user = computed(() => page.props.auth.user);
 </script>
 
 <template>
-    <Header :user="user"/>
-    <slot/>
+    <div class="mx-auto max-w-5xl">
+        <Header :user="user"/>
+        <slot/>
+    </div>
 </template>
 
 <style scoped>

@@ -46,7 +46,7 @@ class News extends Model
     protected function casts(): array
     {
         return [
-            'publish_at' => 'datetime:d.m.Y',
+            'publish_at' => 'datetime',
         ];
     }
 
