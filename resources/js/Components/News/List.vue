@@ -6,7 +6,7 @@ defineProps({news: Object});
 
 <template>
     <div>
-        <Link :href="route('news.detail', {news: news.id})">
+        <Link :href="route('news.detail', {news: news.slug})">
             {{ news.title }}
         </Link>
     </div>

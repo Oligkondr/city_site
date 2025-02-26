@@ -10,7 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * 
+ *
  *
  * @property int $id
  * @property string $link
@@ -44,6 +44,11 @@ class News extends Model
     protected $appends = [
         'image_url',
     ];
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 
     protected function casts(): array
     {
