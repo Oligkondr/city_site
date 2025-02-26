@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  *
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Storage;
  * @property int $category_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read \App\Models\NewsCategory|null $category
+ * @property-read NewsCategory|null $category
  * @property-read mixed $image_url
  * @method static Builder<static>|News newModelQuery()
  * @method static Builder<static>|News newQuery()
@@ -57,7 +58,7 @@ class News extends Model
         ];
     }
 
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(NewsCategory::class);
     }
