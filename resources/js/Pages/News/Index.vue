@@ -8,7 +8,7 @@ defineProps({list: Array});
 
 <template>
     <Layout>
-        <h1>Новости</h1>
+        <h1 class="my-4 font-bold">Все новости</h1>
         <List
             v-for="news in list"
             :news="news"

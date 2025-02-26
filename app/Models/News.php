@@ -10,12 +10,13 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 /**
- *
+ * 
  *
  * @property int $id
  * @property string $link
  * @property string $author
  * @property string $title
+ * @property string $slug
  * @property string $content
  * @property Carbon $publish_at
  * @property int $category_id
@@ -33,6 +34,7 @@ use Illuminate\Support\Facades\Storage;
  * @method static Builder<static>|News whereId($value)
  * @method static Builder<static>|News whereLink($value)
  * @method static Builder<static>|News wherePublishAt($value)
+ * @method static Builder<static>|News whereSlug($value)
  * @method static Builder<static>|News whereTitle($value)
  * @method static Builder<static>|News whereUpdatedAt($value)
  * @mixin Eloquent
