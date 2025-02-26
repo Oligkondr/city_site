@@ -12,7 +12,7 @@ class NewsController extends Controller
     {
         $list = News::query()
             ->orderByDesc('created_at')
-            ->get();
+            ->paginate();
 
         return inertia('News/Index', [
             'list' => $list,
