@@ -7,6 +7,7 @@ use App\Models\NewsCategory;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
 
 class GetNewsCommand extends Command
@@ -60,6 +61,7 @@ class GetNewsCommand extends Command
             $news->link = $item['link'];
             $news->author = $item['author'] ?? '';
             $news->title = $item['title'];
+            $news->slug = Str::slug($news->title);
             $news->content = $content;
             $news->publish_at = $item['pubDate'];
             $news->category_id = $category->id;

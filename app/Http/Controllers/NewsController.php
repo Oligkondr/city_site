@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
+use App\Models\NewsCategory;
 use Inertia\Response;
 
 class NewsController extends Controller
 {
     public function index(): Response
     {
-        $categorySlug = request('category');
+        $currentCategory = request('category');
 
         $queue = News::query();
 
-        if ($categorySlug) {
-            $queue->whereHas('category', function ($query) use ($categorySlug) {
-                $query->where('slug', $categorySlug);
+        if ($currentCategory) {
+            $queue->whereHas('category', function ($query) use ($currentCategory) {
+                $query->where('slug', $currentCategory);
             });
         }
 
@@ -24,6 +25,8 @@ class NewsController extends Controller
                 ->orderByDesc('created_at')
                 ->paginate()
                 ->withQueryString(),
+            'categories' => NewsCategory::all(),
+            'currentCategory' => $currentCategory,
         ]);
     }
 
